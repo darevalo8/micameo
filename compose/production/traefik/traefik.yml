@@ -17,11 +17,14 @@ certificatesResolvers:
   letsencrypt:
     # https://docs.traefik.io/master/https/acme/#lets-encrypt
     acme:
-      email: "danielfelipe.arevalo2@gmail.com"
-      storage: /etc/traefik/acme/acme.json
-      # https://docs.traefik.io/master/https/acme/#httpchallenge
-      httpChallenge:
-        entryPoint: web
+      dnsChallenge:
+        provider: digitalocean
+        delayBeforeCheck: 0
+      # email: "danielfelipe.arevalo2@gmail.com"
+      # storage: /etc/traefik/acme/acme.json
+      # # https://docs.traefik.io/master/https/acme/#httpchallenge
+      # httpChallenge:
+      #   entryPoint: web
 
 http:
   routers:
