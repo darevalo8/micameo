@@ -1,4 +1,5 @@
 import pytest
+# from django.test import RequestFactory
 
 from micameo.users.models import User
 from micameo.users.tests.factories import UserFactory
@@ -12,3 +13,7 @@ def media_storage(settings, tmpdir):
 @pytest.fixture
 def user() -> User:
     return UserFactory()
+
+# @pytest.fixture
+# def request_factory() -> RequestFactory:
+#     return RequestFactory()
