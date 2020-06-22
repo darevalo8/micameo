@@ -26,7 +26,7 @@ class SubCategory(TimeStampedModel):
             'unique': _("A category with that name already exist")
         }
     )
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, related_name='categorys', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.sub_name

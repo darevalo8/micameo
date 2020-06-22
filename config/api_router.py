@@ -1,7 +1,8 @@
 from django.conf import settings
 from rest_framework.routers import DefaultRouter, SimpleRouter
 
-from micameo.users.api.views import UserViewSet
+from micameo.users.api.views import (UserViewSet, CategoryViewSet,
+                                     SubCategoryViewSet, TalentViewSet)
 
 if settings.DEBUG:
     router = DefaultRouter()
@@ -9,7 +10,9 @@ else:
     router = SimpleRouter()
 
 router.register("users", UserViewSet)
-
+router.register("categories", CategoryViewSet)
+router.register("sub-categories", SubCategoryViewSet)
+router.register("talent", TalentViewSet)
 
 app_name = "api"
 urlpatterns = router.urls
