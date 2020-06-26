@@ -15,6 +15,12 @@ class Talent(TimeStampedModel):
         related_name='talent_category',
         blank=True
     )
+    slug = models.SlugField(max_length=50, unique=True, blank=True)
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        self.slug = self.user.username
+        super(Talent, self).save(force_insert, force_update, using, update_fields)
 
     def __str__(self):
         return str(self.user)

@@ -1,5 +1,7 @@
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework.viewsets import GenericViewSet
+# from rest_framework.response import Response
+# from rest_framework import status
 from rest_framework import permissions
 from ..serializers import CategorySerializer, SubCategorySerializer
 from micameo.users.models import Category, SubCategory
@@ -17,3 +19,8 @@ class SubCategoryViewSet(RetrieveModelMixin, ListModelMixin, UpdateModelMixin, G
     queryset = SubCategory.objects.all()
     lookup_field = "sub_name"
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    # def list(self, request, *args, **kwargs):
+    #
+    #     serializer = SubCategorySerializer(self.queryset, context={"request": request}, many=True)
+    #     return Response(status=status.HTTP_200_OK, data=serializer.data)

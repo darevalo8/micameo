@@ -68,6 +68,7 @@ class TalentFactory(DjangoModelFactory):
     description = Faker(
         'paragraph', nb_sentences=8, variable_nb_sentences=True
     )
+    profile_image = 'https://source.unsplash.com/random'
 
     @post_generation
     def post(self, create, extracted, **kwargs):
