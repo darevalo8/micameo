@@ -1,13 +1,10 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from model_utils.models import TimeStampedModel
-from .user_model import User
+from .user_model import BaseUser
 from .category_model import SubCategory
 
 
-class Talent(TimeStampedModel):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    profile_image = models.URLField(_("Your profile photo"), blank=True)
+class Talent(BaseUser):
     description = models.TextField(_("Your Description"), max_length=600, blank=True)
     response_days = models.IntegerField(default=7)
     categories = models.ManyToManyField(
@@ -16,6 +13,7 @@ class Talent(TimeStampedModel):
         blank=True
     )
     slug = models.SlugField(max_length=50, unique=True, blank=True)
+    price = models.FloatField(_("Price of cameo"), default=10.0)
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):

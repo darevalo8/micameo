@@ -21,3 +21,4 @@ django-redis==4.11.0  # https://github.com/jazzband/django-redis
 djangorestframework==3.11.0  # https://github.com/encode/django-rest-framework
 django-cors-headers
 django-rest-framework-social-oauth2
+djangorestframework-simplejwt

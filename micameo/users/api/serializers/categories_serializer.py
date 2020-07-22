@@ -15,7 +15,6 @@ class SubCategorySerializer(serializers.ModelSerializer):
 
     def get_talents_from_category(self, obj):
         talents = obj.talent_category.all()[:6]
-        print(self.context['request'])
         talents_json = TalentSerializer(talents, many=True, context={"request": self.context['request']})
         return talents_json.data
 

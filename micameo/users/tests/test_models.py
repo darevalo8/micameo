@@ -1,6 +1,11 @@
 import pytest
 
-from micameo.users.tests.factories import CategoryFactory, SubCategoryFactory, TalentFactory
+from micameo.users.tests.factories import (
+    CategoryFactory,
+    SubCategoryFactory,
+    TalentFactory,
+    ClientFactory
+)
 from micameo.users.models import User
 
 pytestmark = pytest.mark.django_db
@@ -35,3 +40,9 @@ def test_talent__str__():
     talent = TalentFactory()
     assert talent.__str__() == talent.user.__str__()
     assert str(talent) == talent.user.__str__()
+
+
+def test_client__str__():
+    client = ClientFactory()
+    assert client.__str__() == client.user.__str__()
+    assert str(client) == client.user.__str__()

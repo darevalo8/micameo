@@ -15,6 +15,6 @@ router.register("sub-categories", SubCategoryViewSet)
 router.register("talent", TalentViewSet)
 
 app_name = "api"
-# for i in router.urls:
-#     print(i)
+for i in router.urls:
+    print(i)
 urlpatterns = router.urls

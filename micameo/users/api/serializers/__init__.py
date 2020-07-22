@@ -1,4 +1,4 @@
-from .user_serializer import UserSerializer
+from .user_serializer import UserSerializer, CustomTokenObtainPairSerializer
 from .categories_serializer import CategorySerializer
 from .categories_serializer import SubCategorySerializer
 from .talent_serializer import TalentSerializer

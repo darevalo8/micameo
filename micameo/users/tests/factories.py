@@ -4,7 +4,7 @@ from typing import Any, Sequence
 from django.contrib.auth import get_user_model
 from factory import (DjangoModelFactory, Faker,
                      post_generation, )
-from ..models import Category, Talent, SubCategory
+from ..models import Category, Talent, SubCategory, Client
 
 
 class UserFactory(DjangoModelFactory):
@@ -59,6 +59,14 @@ class SubCategoryFactory(DjangoModelFactory):
     category = factory.SubFactory(CategoryFactory)
 
 
+class ClientFactory(DjangoModelFactory):
+    class Meta:
+        model = Client
+        django_get_or_create = ('user',)
+
+    user = factory.SubFactory(UserFactory)
+
+
 class TalentFactory(DjangoModelFactory):
     class Meta:
         model = Talent
@@ -68,7 +76,7 @@ class TalentFactory(DjangoModelFactory):
     description = Faker(
         'paragraph', nb_sentences=8, variable_nb_sentences=True
     )
-    profile_image = 'https://source.unsplash.com/random'
+    profile_image = 'https://picsum.photos/400/400'
 
     @post_generation
     def post(self, create, extracted, **kwargs):
