@@ -17,9 +17,7 @@ class TalentViewSet(RetrieveModelMixin, ListModelMixin, UpdateModelMixin, Generi
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [filters.SearchFilter]
     search_fields = ['slug', 'user__first_name', 'user__last_name', 'categories__sub_name']
-
-    def get_queryset(self, *args, **kwargs):
-        return self.queryset.filter(id=self.request.user.id)
+    
 
     # def list(self, request, *args, **kwargs):
     #
