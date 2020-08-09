@@ -1,12 +1,12 @@
 import pytest
 
+from micameo.users.models import User
 from micameo.users.tests.factories import (
     CategoryFactory,
     SubCategoryFactory,
     TalentFactory,
     ClientFactory
 )
-from micameo.users.models import User
 
 pytestmark = pytest.mark.django_db
 

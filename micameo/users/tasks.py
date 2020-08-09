@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.core.mail import EmailMessage
+
 from config import celery_app
 
 User = get_user_model()

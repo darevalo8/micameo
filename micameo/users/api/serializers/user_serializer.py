@@ -1,20 +1,27 @@
 from rest_framework import serializers
-
-from micameo.users.models import User
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from ...models import Talent, Client
+
+from micameo.users.models import Talent, Client
+from micameo.users.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
-        return User.objects.create_superuser(**validated_data)
+        user = User(
+            email=validated_data['email'],
+            username=validated_data['username']
+        )
+        user.set_password(validated_data['password'])
+        user.is_active = False
+        user.save()
+        return user
 
     class Meta:
         model = User
-        fields = ["username", "email", "first_name", "last_name", "password"]
+        fields = ["username", "email", "first_name", "last_name", "password", "url"]
         extra_kwargs = {
-            # "url": {"view_name": "api:user-detail", "lookup_field": "username"},
-            'password': {'write_only': True}
+            "url": {"view_name": "api:user-detail", "lookup_field": "username"},
+            "password": {'write_only': True}
         }
 
 

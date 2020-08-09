@@ -1,7 +1,8 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+
 from .user_model import BaseUser
-from .category_model import SubCategory
+from micameo.users.models import SubCategory
 
 
 class Talent(BaseUser):
@@ -12,13 +13,13 @@ class Talent(BaseUser):
         related_name='talent_category',
         blank=True
     )
-    slug = models.SlugField(max_length=50, unique=True, blank=True)
-    price = models.FloatField(_("Price of cameo"), default=10.0)
+    # slug = models.SlugField(max_length=50, unique=True, blank=True)
+    price = models.DecimalField(_("Price of cameo"), default=10.0)
 
-    def save(self, force_insert=False, force_update=False, using=None,
-             update_fields=None):
-        self.slug = self.user.username
-        super(Talent, self).save(force_insert, force_update, using, update_fields)
+    # def save(self, force_insert=False, force_update=False, using=None,
+    #          update_fields=None):
+    #     self.slug = self.user.username
+    #     super(Talent, self).save(force_insert, force_update, using, update_fields)
 
     def __str__(self):
         return str(self.user)

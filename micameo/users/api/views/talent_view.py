@@ -1,28 +1,19 @@
-from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin
-from rest_framework.viewsets import GenericViewSet
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.decorators import action
 from rest_framework import filters
-from rest_framework import permissions
-from ..serializers import TalentSerializer
+from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
+from rest_framework.viewsets import GenericViewSet
+
+from micameo.users.api.serializers import TalentSerializer
+from micameo.users.helpers import RegisterUser
 from micameo.users.models import Talent
-from ...helpers import RegisterUser
 
 
-class TalentViewSet(RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericViewSet):
-    serializer_class = TalentSerializer
+class TalentViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
     queryset = Talent.objects.all()
+    serializer_class = TalentSerializer
     lookup_field = "slug"
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [filters.SearchFilter]
     search_fields = ['slug', 'user__first_name', 'user__last_name', 'categories__sub_name']
-    
-
-    # def list(self, request, *args, **kwargs):
-    #
-    #     serializer = TalentSerializer(self.queryset, context={"request": request}, many=True)
-    #     return Response(status=status.HTTP_200_OK, data=serializer.data)
 
 
 class RegisterTalent(RegisterUser):

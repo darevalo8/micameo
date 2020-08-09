@@ -1,15 +1,15 @@
 from django.urls import path
 
-from micameo.users.views import (
-    user_detail_view,
-    user_redirect_view,
-    user_update_view,
-)
 from micameo.users.api.views import (
     RegisterTalent,
     RegisterClient,
     activate,
     CustomTokenObtainPairView
+)
+from micameo.users.views import (
+    user_detail_view,
+    user_redirect_view,
+    user_update_view,
 )
 
 app_name = "users"

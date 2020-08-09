@@ -1,8 +1,9 @@
 from django.contrib import admin
 from django.contrib.auth import admin as auth_admin
 from django.contrib.auth import get_user_model
-from .models import Talent, Client, Category, SubCategory
+
 from micameo.users.forms import UserChangeForm, UserCreationForm
+from micameo.users.models import Talent, Client, Category, SubCategory
 
 User = get_user_model()
 

@@ -1,17 +1,16 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import HttpResponse
-from django.utils.http import urlsafe_base64_decode
 from django.utils.encoding import force_text
+from django.utils.http import urlsafe_base64_decode
 from rest_framework import status
-
 from rest_framework.decorators import action
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-from ..serializers import UserSerializer, CustomTokenObtainPairSerializer
-from ...token_generator import account_activation_token
+from micameo.users.api.serializers import UserSerializer, CustomTokenObtainPairSerializer
+from micameo.users.token_generator import account_activation_token
 
 User = get_user_model()
 
@@ -20,9 +19,6 @@ class UserViewSet(RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericV
     serializer_class = UserSerializer
     queryset = User.objects.all()
     lookup_field = "username"
-
-    def get_queryset(self, *args, **kwargs):
-        return self.queryset.filter(id=self.request.user.id)
 
     @action(detail=False, methods=["GET"])
     def me(self, request):

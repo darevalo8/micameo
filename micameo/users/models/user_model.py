@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import RegexValidator
 from django.db import models
 from django.urls import reverse
-from django.core.validators import RegexValidator
 from django.utils.translation import ugettext_lazy as _
 # Utils models
 from model_utils.models import TimeStampedModel
@@ -34,6 +34,12 @@ class BaseUser(TimeStampedModel):
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)
     profile_image = models.URLField(_("Your profile photo"), blank=True)
     birthday = models.DateField(_("Day of Birthday"), null=True)
+    slug = models.SlugField(max_length=50, unique=True, blank=True)
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        self.slug = self.user.username
+        super(BaseUser, self).save(force_insert, force_update, using, update_fields)
 
     class Meta:
         abstract = True

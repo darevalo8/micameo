@@ -1,9 +1,16 @@
 from rest_framework import serializers
+
 from micameo.users.models import Category, SubCategory
 from .talent_serializer import TalentSerializer
 
 
 class SubCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SubCategory
+        fields = ['id', 'sub_name', 'category']
+
+
+class SubCategoryCustomSerializer(serializers.ModelSerializer):
     talent_category = serializers.SerializerMethodField("get_talents_from_category")
     # talent_category = TalentSerializer(many=True, read_only=True)
 
@@ -11,7 +18,10 @@ class SubCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SubCategory
-        fields = ['sub_name', 'category', 'talent_category']
+        fields = ['id', 'sub_name', 'category', 'talent_category']
+        extra_kwargs = {
+            'talent_category': {'required': False}
+        }
 
     def get_talents_from_category(self, obj):
         talents = obj.talent_category.all()[:6]
@@ -24,7 +34,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ['name', 'categorys', 'url']
+        fields = ['id', 'name', 'categorys', 'url']
         extra_kwargs = {
             "url": {"view_name": "api:category-detail", "lookup_field": "name"}
         }

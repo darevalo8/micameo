@@ -1,10 +1,11 @@
-import factory.fuzzy
 from typing import Any, Sequence
 
+import factory.fuzzy
 from django.contrib.auth import get_user_model
 from factory import (DjangoModelFactory, Faker,
                      post_generation, )
-from ..models import Category, Talent, SubCategory, Client
+
+from micameo.users.models import Category, Talent, SubCategory, Client
 
 
 class UserFactory(DjangoModelFactory):
