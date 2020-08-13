@@ -27,4 +27,4 @@ class SubCategoryAddViewSet(ListModelMixin, CreateModelMixin, GenericViewSet):
     filter_backends = [filters.SearchFilter]
     lookup_field = "sub_name"
     search_fields = ['sub_name', 'category__name']
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]

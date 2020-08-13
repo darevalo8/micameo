@@ -1,5 +1,5 @@
 from .categories_serializer import CategorySerializer
 from .categories_serializer import SubCategoryCustomSerializer, SubCategorySerializer
-from .talent_serializer import TalentSerializer
-from .user_serializer import UserSerializer, CustomTokenObtainPairSerializer
 from .client_serializers import ClientSerializer
+from .talent_serializer import TalentSerializer, TalentUpdateSerializer
+from .user_serializer import UserSerializer, CustomTokenObtainPairSerializer

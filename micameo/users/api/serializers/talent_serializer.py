@@ -17,3 +17,16 @@ class TalentSerializer(serializers.ModelSerializer):
             "user": {"required": False},
 
         }
+
+
+class TalentUpdateSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Talent
+        fields = ['user', 'profile_image', 'description', 'response_days', "price", "url", "categories", "birthday"]
+        extra_kwargs = {
+            "url": {"view_name": "api:talent-detail", "lookup_field": "slug"},
+            "user": {"required": False},
+
+        }

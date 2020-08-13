@@ -3,7 +3,8 @@ from rest_framework.routers import DefaultRouter, SimpleRouter
 
 from micameo.users.api.views import (UserViewSet, CategoryViewSet,
                                      SubCategoryViewSet, TalentViewSet,
-                                     SubCategoryAddViewSet, ClientViewSet)
+                                     TalentUpdateViewSet, SubCategoryAddViewSet,
+                                     ClientViewSet)
 
 if settings.DEBUG:
     router = DefaultRouter()
@@ -12,11 +13,11 @@ else:
 
 router.register("users", UserViewSet)
 router.register("talents", TalentViewSet)
+router.register("talent", TalentUpdateViewSet)
 router.register("client", ClientViewSet)
 router.register("categories", CategoryViewSet)
 router.register("sub-category", SubCategoryAddViewSet)
 router.register("sub-categories", SubCategoryViewSet)
-
 
 app_name = "api"
 for i in router.urls:

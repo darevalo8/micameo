@@ -14,7 +14,7 @@ class Talent(BaseUser):
         blank=True
     )
     # slug = models.SlugField(max_length=50, unique=True, blank=True)
-    price = models.DecimalField(_("Price of cameo"), default=10.0)
+    price = models.DecimalField(_("Price of cameo"), max_digits=19, decimal_places=2, default=10.0)
 
     # def save(self, force_insert=False, force_update=False, using=None,
     #          update_fields=None):
