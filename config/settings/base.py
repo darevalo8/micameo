@@ -60,7 +60,7 @@ DJANGO_APPS = [
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # "django.contrib.humanize", # Handy template tags
+    "django.contrib.humanize",  # Handy template tags
     "django.contrib.admin",
     "django.forms",
 ]
@@ -98,9 +98,11 @@ AUTHENTICATION_BACKENDS = [
     # Facebook OAuth2
     'social_core.backends.facebook.FacebookAppOAuth2',
     'social_core.backends.facebook.FacebookOAuth2',
-    #     DRF SOCIAL
+    #     DRF SOCIAL AUTH
     'rest_framework_social_oauth2.backends.DjangoOAuth2',
+
     "django.contrib.auth.backends.ModelBackend",
+    # ALLAUTH
     "allauth.account.auth_backends.AuthenticationBackend",
 
 ]
@@ -198,7 +200,7 @@ TEMPLATES = [
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
                 "micameo.utils.context_processors.settings_context",
-                #     drf social
+                #     DJANGO REST SOCIAL AUTH2
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
             ],
@@ -314,7 +316,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         # "rest_framework.authentication.SessionAuthentication",
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        #     DRF SOCIAL
+        #     DRF SOCIAL AUTH2
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',  # django-oauth-toolkit >= 1.0.0
         'rest_framework_social_oauth2.authentication.SocialAuthentication'
     ),
