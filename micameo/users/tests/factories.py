@@ -2,13 +2,13 @@ from typing import Any, Sequence
 
 import factory.fuzzy
 from django.contrib.auth import get_user_model
-from factory import (DjangoModelFactory, Faker,
+from factory import (django, Faker,
                      post_generation, )
 
 from micameo.users.models import Category, Talent, SubCategory, Client
 
 
-class UserFactory(DjangoModelFactory):
+class UserFactory(django.DjangoModelFactory):
     class Meta:
         model = get_user_model()
         django_get_or_create = ('username',)
@@ -35,7 +35,7 @@ class UserFactory(DjangoModelFactory):
         self.set_password(password)
 
 
-class CategoryFactory(DjangoModelFactory):
+class CategoryFactory(django.DjangoModelFactory):
     class Meta:
         model = Category
         django_get_or_create = ('name',)
@@ -48,7 +48,7 @@ class CategoryFactory(DjangoModelFactory):
     ])
 
 
-class SubCategoryFactory(DjangoModelFactory):
+class SubCategoryFactory(django.DjangoModelFactory):
     class Meta:
         model = SubCategory
         django_get_or_create = ('sub_name',)
@@ -60,7 +60,7 @@ class SubCategoryFactory(DjangoModelFactory):
     category = factory.SubFactory(CategoryFactory)
 
 
-class ClientFactory(DjangoModelFactory):
+class ClientFactory(django.DjangoModelFactory):
     class Meta:
         model = Client
         django_get_or_create = ('user',)
@@ -68,7 +68,7 @@ class ClientFactory(DjangoModelFactory):
     user = factory.SubFactory(UserFactory)
 
 
-class TalentFactory(DjangoModelFactory):
+class TalentFactory(django.DjangoModelFactory):
     class Meta:
         model = Talent
         django_get_or_create = ('user',)
