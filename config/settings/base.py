@@ -73,10 +73,6 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     'corsheaders',
-    # DRF SOCIAL
-    # 'oauth2_provider',
-    # 'social_django',
-    # 'rest_framework_social_oauth2',
 ]
 
 LOCAL_APPS = [
@@ -95,16 +91,6 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#authentication-backends
 AUTHENTICATION_BACKENDS = [
-    # # Facebook OAuth2
-    # 'social_core.backends.facebook.FacebookAppOAuth2',
-    # 'social_core.backends.facebook.FacebookOAuth2',
-    # # TWITTER
-    # 'social_core.backends.twitter.TwitterOAuth',
-    # # Google
-    # 'social_core.backends.google.GoogleOAuth2',
-    # #     DRF SOCIAL AUTH
-    # 'rest_framework_social_oauth2.backends.DjangoOAuth2',
-
     "django.contrib.auth.backends.ModelBackend",
     # ALLAUTH
     "allauth.account.auth_backends.AuthenticationBackend",
@@ -203,9 +189,6 @@ TEMPLATES = [
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
                 "micameo.utils.context_processors.settings_context",
-                #     DJANGO REST SOCIAL AUTH2
-                # 'social_django.context_processors.backends',
-                # 'social_django.context_processors.login_redirect',
             ],
         },
     }
@@ -320,12 +303,6 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.BasicAuthentication',
         # 'rest_framework.authentication.SessionAuthentication',
 
-        # "rest_framework.authentication.SessionAuthentication",
-        #     DRF SOCIAL AUTH2
-        # 'rest_framework_social_oauth2.authentication.SocialAuthentication',
-        # # django-oauth-toolkit >= 1.0.0
-        # 'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-
         'rest_framework_simplejwt.authentication.JWTAuthentication',
 
     ),
@@ -345,18 +322,9 @@ CORS_ORIGIN_WHITELIST = [
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
 }
-# Facebook configuration
-# SOCIAL_AUTH_FACEBOOK_KEY = env('SOCIAL_AUTH_FACEBOOK_KEY')
-# SOCIAL_AUTH_FACEBOOK_SECRET = env('SOCIAL_AUTH_FACEBOOK_SECRET')
+
 FACEBOOK_APP_ID = env('SOCIAL_AUTH_FACEBOOK_KEY')
 FACEBOOK_APP_SECRET = env('SOCIAL_AUTH_FACEBOOK_SECRET')
-
-# Define SOCIAL_AUTH_FACEBOOK_SCOPE to get extra permissions from Facebook.
-# Email is not sent by default, to get it, you must request the email permission.
-# SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
-# SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
-#     'fields': 'id, name, email'
-# }
 
 # # Twitter configuration
 SOCIAL_AUTH_TWITTER_KEY = env('SOCIAL_AUTH_TWITTER_KEY')
