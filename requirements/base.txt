@@ -19,6 +19,7 @@ django-crispy-forms==1.9.2  # https://github.com/django-crispy-forms/django-cris
 django-redis==4.12.1  # https://github.com/jazzband/django-redis
 # Django REST Framework
 djangorestframework==3.11.1  # https://github.com/encode/django-rest-framework
-django-cors-headers
-django-rest-framework-social-oauth2
-djangorestframework-simplejwt
+django-cors-headers # https://github.com/adamchainz/django-cors-headers
+djangorestframework-simplejwt # https://django-rest-framework-simplejwt.readthedocs.io/en/latest/
+facebook-sdk # https://facebook-sdk.readthedocs.io/en/latest/
+tweepy # http://docs.tweepy.org/en/latest/getting_started.html

@@ -20,6 +20,6 @@ router.register("sub-category", SubCategoryAddViewSet)
 router.register("sub-categories", SubCategoryViewSet)
 
 app_name = "api"
-for i in router.urls:
-    print(i)
+# for i in router.urls:
+#     print(i)
 urlpatterns = router.urls

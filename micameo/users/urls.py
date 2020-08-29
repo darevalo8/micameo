@@ -4,7 +4,8 @@ from micameo.users.api.views import (
     RegisterTalent,
     RegisterClient,
     activate,
-    CustomTokenObtainPairView
+    CustomTokenObtainPairView,
+    LoginSocialView
 )
 from micameo.users.views import (
     user_detail_view,
@@ -21,4 +22,5 @@ urlpatterns = [
     path("register-client", RegisterClient.as_view(), name="register_client"),
     path("activate/<slug:uidb64>/<slug:token>", view=activate, name="activate"),
     path("login", CustomTokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("auth/social-login", LoginSocialView.as_view(), name='facebook_login')
 ]

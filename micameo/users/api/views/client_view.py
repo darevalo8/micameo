@@ -19,14 +19,10 @@ class ClientViewSet(ListModelMixin, UpdateModelMixin,
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
     lookup_field = "slug"
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
 
     @action(detail=False, methods=["GET"])
     def me(self, request):
         queryset = self.get_queryset()
-        try:
-            client_profile = queryset.get(slug=request.user)
-        except Client.DoesNotExist:
-            client_profile = Client.objects.create(user=request.user)
-        serializer = ClientSerializer(client_profile, context={"request": request})
+        serializer = ClientSerializer(queryset.get(slug=request.user), context={"request": request})
         return Response(status=status.HTTP_200_OK, data=serializer.data)
