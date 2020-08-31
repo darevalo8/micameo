@@ -76,7 +76,6 @@ class LoginSocialView(APIView):
                     'profile_url': user_info.profile_image_url_https
                 }
                 response = self.get_or_create_client(data)
-                print(user_info.profile_image_url_https)
             except tweepy.TweepError:
                 return Response(status=status.HTTP_400_BAD_REQUEST, data={'error': "access_token invalido"})
 
@@ -98,7 +97,6 @@ class LoginSocialView(APIView):
                     'profile_url': user_info['picture']['data']['url']
                 }
                 response = self.get_or_create_client(data)
-                print(user_info)
             except facebook.GraphAPIError:
                 return Response(status=status.HTTP_400_BAD_REQUEST, data={'error': "access_token invalido"})
 
