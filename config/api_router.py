@@ -22,6 +22,6 @@ router.register("sub-categories", SubCategoryViewSet)
 router.register("enroll", EnrollViewSet)
 
 app_name = "api"
-for i in router.urls:
-    print(i)
+# for i in router.urls:
+#     print(i)
 urlpatterns = router.urls
