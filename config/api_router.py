@@ -5,6 +5,7 @@ from micameo.users.api.views import (UserViewSet, CategoryViewSet,
                                      SubCategoryViewSet, TalentViewSet,
                                      TalentUpdateViewSet, SubCategoryAddViewSet,
                                      ClientViewSet)
+from micameo.enroll.api.views import EnrollViewSet
 
 if settings.DEBUG:
     router = DefaultRouter()
@@ -18,8 +19,9 @@ router.register("client", ClientViewSet)
 router.register("categories", CategoryViewSet)
 router.register("sub-category", SubCategoryAddViewSet)
 router.register("sub-categories", SubCategoryViewSet)
+router.register("enroll", EnrollViewSet)
 
 app_name = "api"
-# for i in router.urls:
-#     print(i)
+for i in router.urls:
+    print(i)
 urlpatterns = router.urls
