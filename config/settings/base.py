@@ -78,6 +78,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "micameo.users.apps.UsersConfig",
     "micameo.enroll.apps.EnrollConfig",
+    "micameo.order.apps.OrderConfig",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

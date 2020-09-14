@@ -28,10 +28,11 @@ urlpatterns += [
     # API base url
     path("api/", include("config.api_router")),
     # DRF auth token
-
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
-    path("api/auth/users/", include("micameo.users.urls", namespace="users_api"))
+    path("api/auth/users/", include("micameo.users.urls", namespace="users_api")),
+    #     ORDER URL
+    path("api/orders/", include("micameo.order.urls", namespace="order_api"))
 
 ]
 
