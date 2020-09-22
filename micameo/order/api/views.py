@@ -12,6 +12,7 @@ from micameo.order.api.serializers import OrderSerializer
 
 class CreateOrderApi(ApiErrorsMixin, APIView):
     class InputSerializer(serializers.Serializer):
+        id = serializers.IntegerField(read_only=True)
         email_client = serializers.EmailField()
         talent = serializers.CharField()
         phone_number = serializers.CharField()
@@ -25,8 +26,9 @@ class CreateOrderApi(ApiErrorsMixin, APIView):
     def post(self, request):
         serializer = self.InputSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        create_order(**serializer.validated_data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        order_response = create_order(**serializer.validated_data)
+        serializer_response = self.InputSerializer(order_response)
+        return Response(serializer_response.data, status=status.HTTP_201_CREATED)
 
 
 class OrderListClientApi(ApiErrorsMixin, APIView):
