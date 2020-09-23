@@ -317,7 +317,9 @@ REST_FRAMEWORK = {
 # CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = [
     "http://localhost",
+    "https://localhost",
     "http://localhost:4200",
+    "https://localhost:4200",
     'https://mi-cameo.firebaseapp.com'
 ]
 # JWT
