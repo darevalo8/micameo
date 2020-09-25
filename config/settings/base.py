@@ -310,6 +310,7 @@ REST_FRAMEWORK = {
     ),
     # "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_PAGINATION_CLASS": "config.pagination.CustomPagination",
+    "EXCEPTION_HANDLER": 'micameo.utils.utils.exception_errors_format_handler'
 }
 # Your stuff...
 # ------------------------------------------------------------------------------

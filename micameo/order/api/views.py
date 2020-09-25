@@ -5,8 +5,10 @@ from rest_framework.views import APIView
 from rest_framework import serializers
 
 from micameo.utils.utils import ApiErrorsMixin
-from micameo.order.service import create_order
-from micameo.order.selectors import (get_orders_by_client, get_orders_by_talent)
+from micameo.order.service import (create_order, update_order_state,
+                                   update_order_talent_response, create_cameo,
+                                   update_cameo)
+from micameo.order.selectors import (get_orders_by_client, get_orders_by_talent, get_cameo_by_order)
 from micameo.order.api.serializers import OrderSerializer
 
 
@@ -30,6 +32,11 @@ class CreateOrderApi(ApiErrorsMixin, APIView):
         serializer_response = self.InputSerializer(order_response)
         return Response(serializer_response.data, status=status.HTTP_201_CREATED)
 
+    def put(self, request, pk):
+        order_response = update_order_state(pk, request.data['order_state'])
+        serializer_response = self.InputSerializer(order_response)
+        return Response(serializer_response.data, status=status.HTTP_200_OK)
+
 
 class OrderListClientApi(ApiErrorsMixin, APIView):
 
@@ -46,3 +53,34 @@ class OrderListTalentApi(ApiErrorsMixin, APIView):
         orders = get_orders_by_talent(request.user)
         serializer = OrderSerializer(orders, many=True)
         return Response(serializer.data)
+
+    def put(self, request, pk):
+        order_response = update_order_talent_response(pk, request.data['order_response'])
+        serializer_response = OrderSerializer(order_response)
+        return Response(serializer_response.data, status=status.HTTP_200_OK)
+
+
+class CreateCameoApi(ApiErrorsMixin, APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    class InputSerializer(serializers.Serializer):
+        id = serializers.IntegerField(read_only=True)
+        url_video = serializers.URLField()
+        order = serializers.CharField()
+
+    def get(self, request, pk):
+        cameo_response = get_cameo_by_order(pk)
+        serializer_response = self.InputSerializer(cameo_response)
+        return Response(serializer_response.data, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        serializer = self.InputSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        cameo_response = create_cameo(**serializer.validated_data)
+        serializer_response = self.InputSerializer(cameo_response)
+        return Response(serializer_response.data, status=status.HTTP_201_CREATED)
+
+    def put(self, request, pk):
+        cameo_response = update_cameo(pk, request.data['url_video'])
+        serializer_response = self.InputSerializer(cameo_response)
+        return Response(serializer_response.data, status=status.HTTP_200_OK)

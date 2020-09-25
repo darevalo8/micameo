@@ -1,4 +1,5 @@
-from micameo.order.models import Occasion, Order
+from micameo.order.models import Occasion, Order, Cameo
+from micameo.users.models import User
 from django.core.exceptions import ValidationError
 
 
@@ -10,19 +11,42 @@ def get_occasion(occasion_name: str) -> Occasion:
     return occasion
 
 
-def get_orders_by_client(email: str):
+def list_occasion():
+    return Occasion.objects.all()
+
+
+def get_order(order_id) -> Order:
     try:
-        orders = Order.objects.filter(email_client=email)
+        order = Order.objects.get(pk=order_id)
     except Order.DoesNotExist:
-        orders = []
+        raise ValidationError("Order does no exist")
+    return order
+
+
+def get_orders_by_client(email: str) -> Order:
+    orders = Order.objects.filter(email_client=email)
 
     return orders
 
 
-def get_orders_by_talent(user):
-    try:
-        orders = Order.objects.filter(talent__user=user, order_state=2)
-    except Order.DoesNotExist:
-        orders = []
-
+def get_orders_by_talent(user: User) -> Order:
+    orders = Order.objects.filter(talent__user=user, order_state=2)
     return orders
+
+
+def get_cameo(cameo_id) -> Cameo:
+    try:
+        cameo = Cameo.objects.get(pk=cameo_id)
+    except Cameo.DoesNotExist:
+        raise ValidationError("Cameo does no exist")
+
+    return cameo
+
+
+def get_cameo_by_order(order_id) -> Cameo:
+    try:
+        cameo = Cameo.objects.get(order_id=order_id)
+    except Cameo.DoesNotExist:
+        raise ValidationError("Cameo does no exist")
+
+    return cameo
