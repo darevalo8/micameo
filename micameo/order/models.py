@@ -53,7 +53,7 @@ class Order(TimeStampedModel):
 
 class Cameo(TimeStampedModel):
     url_video = models.URLField()
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    order = models.OneToOneField(Order, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.order)

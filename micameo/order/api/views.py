@@ -8,7 +8,8 @@ from micameo.utils.utils import ApiErrorsMixin
 from micameo.order.service import (create_order, update_order_state,
                                    update_order_talent_response, create_cameo,
                                    update_cameo)
-from micameo.order.selectors import (get_orders_by_client, get_orders_by_talent, get_cameo_by_order)
+from micameo.order.selectors import (get_orders_by_client, get_orders_by_talent, get_cameo_by_order,
+                                     get_orders_by_talent_accept, get_cameo_by_client)
 from micameo.order.api.serializers import OrderSerializer
 
 
@@ -60,6 +61,15 @@ class OrderListTalentApi(ApiErrorsMixin, APIView):
         return Response(serializer_response.data, status=status.HTTP_200_OK)
 
 
+class OrderAcceptListTalentApi(ApiErrorsMixin, APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        orders = get_orders_by_talent_accept(request.user)
+        serializer = OrderSerializer(orders, many=True)
+        return Response(serializer.data)
+
+
 class CreateCameoApi(ApiErrorsMixin, APIView):
     permission_classes = [permissions.IsAuthenticated]
 
@@ -83,4 +93,18 @@ class CreateCameoApi(ApiErrorsMixin, APIView):
     def put(self, request, pk):
         cameo_response = update_cameo(pk, request.data['url_video'])
         serializer_response = self.InputSerializer(cameo_response)
+        return Response(serializer_response.data, status=status.HTTP_200_OK)
+
+
+class GetCameoClientApi(ApiErrorsMixin, APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    class InputSerializer(serializers.Serializer):
+        id = serializers.IntegerField(read_only=True)
+        url_video = serializers.URLField()
+        order = serializers.CharField()
+
+    def get(self, request):
+        cameo_response = get_cameo_by_client(request.user.email)
+        serializer_response = self.InputSerializer(cameo_response, many=True)
         return Response(serializer_response.data, status=status.HTTP_200_OK)

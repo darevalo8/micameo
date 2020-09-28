@@ -30,7 +30,12 @@ def get_orders_by_client(email: str) -> Order:
 
 
 def get_orders_by_talent(user: User) -> Order:
-    orders = Order.objects.filter(talent__user=user, order_state=2)
+    orders = Order.objects.filter(talent__user=user, order_state=2, talent_response=1)
+    return orders
+
+
+def get_orders_by_talent_accept(user: User) -> Order:
+    orders = Order.objects.filter(talent__user=user, order_state=2, talent_response=2)
     return orders
 
 
@@ -50,3 +55,7 @@ def get_cameo_by_order(order_id) -> Cameo:
         raise ValidationError("Cameo does no exist")
 
     return cameo
+
+
+def get_cameo_by_client(email: str) -> Cameo:
+    return Cameo.objects.filter(order__email_client=email)
