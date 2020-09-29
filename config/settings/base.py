@@ -320,7 +320,7 @@ CORS_ORIGIN_WHITELIST = [
     "http://localhost",
     "https://localhost",
     "http://localhost:4200",
-    "https://localhost:4200",
+    "http://localhost:4400",
     'https://mi-cameo.firebaseapp.com'
 ]
 # JWT

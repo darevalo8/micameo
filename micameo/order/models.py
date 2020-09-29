@@ -15,10 +15,10 @@ class Occasion(TimeStampedModel):
 
 class Order(TimeStampedModel):
     TRANSACTION_CHOICES = (
-        (1, 'PENDIENTE'),
-        (2, 'APROBADO'),
-        (3, 'RECHAZADO'),
-        (4, 'DEVOLUCION')
+        (1, 'APROBADO'),
+        (2, 'RECHAZADA'),
+        (3, 'PEDIENTE'),
+        (4, 'FALLIDA')
     )
     PAY_CHOICES = (
         (1, 'PAYCO'),
