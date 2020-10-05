@@ -30,12 +30,12 @@ def get_orders_by_client(email: str) -> Order:
 
 
 def get_orders_by_talent(user: User) -> Order:
-    orders = Order.objects.filter(talent__user=user, order_state=2, talent_response=1)
+    orders = Order.objects.filter(talent__user=user, order_state=1, talent_response=1)
     return orders
 
 
 def get_orders_by_talent_accept(user: User) -> Order:
-    orders = Order.objects.filter(talent__user=user, order_state=2, talent_response=2)
+    orders = Order.objects.filter(talent__user=user, order_state=1, talent_response=2)
     return orders
 
 
