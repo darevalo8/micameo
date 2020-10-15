@@ -9,8 +9,11 @@ from micameo.order.service import (create_order, update_order_state,
                                    update_order_talent_response, create_cameo,
                                    update_cameo)
 from micameo.order.selectors import (get_orders_by_client, get_orders_by_talent, get_cameo_by_order,
-                                     get_orders_by_talent_accept, get_cameo_by_client)
+                                     get_orders_by_talent_accept, get_cameo_by_client,
+                                     get_orders_pending_and_completed)
 from micameo.order.api.serializers import OrderSerializer
+
+from micameo.utils.utils import inline_serializer
 
 
 class CreateOrderApi(ApiErrorsMixin, APIView):
@@ -99,12 +102,27 @@ class CreateCameoApi(ApiErrorsMixin, APIView):
 class GetCameoClientApi(ApiErrorsMixin, APIView):
     permission_classes = [permissions.IsAuthenticated]
 
-    class InputSerializer(serializers.Serializer):
+    class OutputSerializer(serializers.Serializer):
         id = serializers.IntegerField(read_only=True)
         url_video = serializers.URLField()
         order = serializers.CharField()
 
     def get(self, request):
         cameo_response = get_cameo_by_client(request.user.email)
-        serializer_response = self.InputSerializer(cameo_response, many=True)
+        serializer_response = self.OutputSerializer(cameo_response, many=True)
         return Response(serializer_response.data, status=status.HTTP_200_OK)
+
+
+class GetTotalOrdersPendingAndCompleteApi(ApiErrorsMixin, APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    @staticmethod
+    def get(request):
+        order_data = get_orders_pending_and_completed(request.user)
+        fields = {
+            'ordenes_pendientes': serializers.IntegerField(),
+            'odenes_completadas': serializers.IntegerField(),
+        }
+        serializer = inline_serializer(fields=fields, data=order_data)
+        serializer.is_valid()
+        return Response(serializer.data, status=status.HTTP_200_OK)

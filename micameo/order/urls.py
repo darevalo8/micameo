@@ -1,7 +1,7 @@
 from django.urls import path
 from micameo.order.api.views import (CreateOrderApi, OrderListTalentApi,
                                      OrderListClientApi, OrderAcceptListTalentApi,
-                                     CreateCameoApi, GetCameoClientApi)
+                                     CreateCameoApi, GetCameoClientApi, GetTotalOrdersPendingAndCompleteApi)
 
 app_name = "order"
 urlpatterns = [
@@ -14,4 +14,5 @@ urlpatterns = [
     path("cameo", view=CreateCameoApi.as_view(), name="add_cameo"),
     path("cameo/client", view=GetCameoClientApi.as_view(), name="get_cameo_by_client"),
     path("cameo/<int:pk>/", view=CreateCameoApi.as_view(), name="update_and_detail_cameo"),
+    path("talent/pending/", view=GetTotalOrdersPendingAndCompleteApi.as_view(), name="get_orders_pending")
 ]

@@ -39,6 +39,17 @@ def get_orders_by_talent_accept(user: User) -> Order:
     return orders
 
 
+def get_orders_pending_and_completed(user: User):
+    pending_orders = Order.objects.filter(talent__user=user, order_state=1, talent_response=1).count()
+    completed_orders = Order.objects.filter(talent__user=user, order_state=1, talent_response=5).count()
+
+    data = {
+        'ordenes_pendientes': pending_orders,
+        'odenes_completadas': completed_orders
+    }
+    return data
+
+
 def get_cameo(cameo_id) -> Cameo:
     try:
         cameo = Cameo.objects.get(pk=cameo_id)
