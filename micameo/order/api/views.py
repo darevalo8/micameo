@@ -1,19 +1,20 @@
 from rest_framework import permissions
+from rest_framework import serializers
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import serializers
 
-from micameo.utils.utils import ApiErrorsMixin
+from micameo.order.api.serializers import OrderSerializer
+from micameo.order.selectors import (get_orders_by_client, get_orders_by_talent, get_cameo_by_order,
+                                     get_orders_by_talent_accept, get_cameo_by_client,
+                                     get_orders_pending_and_completed, get_orders_per_month_talent,
+                                     get_orders_per_month_client, get_cameo_public_by_talent,
+                                     get_orders_by_occasion_talent, list_occasion)
 from micameo.order.service import (create_order, update_order_state,
                                    update_order_talent_response, create_cameo,
                                    update_cameo)
-from micameo.order.selectors import (get_orders_by_client, get_orders_by_talent, get_cameo_by_order,
-                                     get_orders_by_talent_accept, get_cameo_by_client,
-                                     get_orders_pending_and_completed)
-from micameo.order.api.serializers import OrderSerializer
-
-from micameo.utils.utils import inline_serializer
+from micameo.utils.utils import ApiErrorsMixin, inline_serializer
+from micameo.order.models import Occasion
 
 
 class CreateOrderApi(ApiErrorsMixin, APIView):
@@ -42,12 +43,26 @@ class CreateOrderApi(ApiErrorsMixin, APIView):
         return Response(serializer_response.data, status=status.HTTP_200_OK)
 
 
-class OrderListClientApi(ApiErrorsMixin, APIView):
+class ListOccasionApi(ApiErrorsMixin, APIView):
+    class OutPutSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Occasion
+            fields = ("occasion_name",)
 
     def get(self, request):
+        occasions = list_occasion()
+        serializer = self.OutPutSerializer(occasions, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class OrderListClientApi(ApiErrorsMixin, APIView):
+
+    @staticmethod
+    def get(request):
         orders = get_orders_by_client(request.GET['email'])
         serializer = OrderSerializer(orders, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class OrderListTalentApi(ApiErrorsMixin, APIView):
@@ -125,4 +140,52 @@ class GetTotalOrdersPendingAndCompleteApi(ApiErrorsMixin, APIView):
         }
         serializer = inline_serializer(fields=fields, data=order_data)
         serializer.is_valid()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class GetOrdersByOccasionApi(ApiErrorsMixin, APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    @staticmethod
+    def get(request):
+        order_data = get_orders_by_occasion_talent(request.user)
+        fields = {
+            'occasion__occasion_name': serializers.CharField(),
+            'total_order': serializers.IntegerField(),
+        }
+        serializer = inline_serializer(fields=fields, data=order_data, many=True)
+        serializer.is_valid()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class GetOrdersPerMonthTalentApi(ApiErrorsMixin, APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    @staticmethod
+    def get(request):
+        month = int(request.GET['month'])
+        orders = get_orders_per_month_talent(user=request.user, month=month)
+        serializer = OrderSerializer(orders, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class GetOrdersPerMonthClientApi(ApiErrorsMixin, APIView):
+
+    @staticmethod
+    def get(request):
+        month = int(request.GET['month'])
+        email = request.GET['email']
+        orders = get_orders_per_month_client(email=email, month=month)
+        serializer = OrderSerializer(orders, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class GetCameosPublicTalentApi(ApiErrorsMixin, APIView):
+    class OutputSerializer(serializers.Serializer):
+        url_video = serializers.URLField()
+
+    def get(self, request):
+        username = request.GET['username']
+        cameos = get_cameo_public_by_talent(user=username)
+        serializer = self.OutputSerializer(cameos, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)

@@ -10,7 +10,8 @@ class TalentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Talent
-        fields = ['user', 'profile_image', 'description', 'response_days', "price", "url", "categories", "birthday"]
+        fields = ['user', 'profile_image', 'description', 'response_days', "phone_number", "price", "url", "categories",
+                  "birthday"]
         # read_only_fields = ['user', ]
         extra_kwargs = {
             "url": {"view_name": "api:talent-detail", "lookup_field": "slug"},
@@ -21,10 +22,12 @@ class TalentSerializer(serializers.ModelSerializer):
 
 class TalentUpdateSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
+    categories = serializers.ListField()
 
     class Meta:
         model = Talent
-        fields = ['user', 'profile_image', 'description', 'response_days', "price", "url", "categories", "birthday"]
+        fields = ['user', 'profile_image', 'description', "phone_number", 'response_days', "price", "url", "categories",
+                  "birthday"]
         extra_kwargs = {
             "url": {"view_name": "api:talent-detail", "lookup_field": "slug"},
             "user": {"required": False},

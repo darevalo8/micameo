@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter, SimpleRouter
 
 from micameo.users.api.views import (UserViewSet, CategoryViewSet,
                                      SubCategoryViewSet, TalentViewSet,
-                                     TalentUpdateViewSet, SubCategoryAddViewSet,
+                                     SubCategoryAddViewSet,
                                      ClientViewSet)
 from micameo.enroll.api.views import EnrollViewSet
 
@@ -14,7 +14,7 @@ else:
 
 router.register("users", UserViewSet)
 router.register("talents", TalentViewSet)
-router.register("talent", TalentUpdateViewSet)
+# router.register("talent", TalentUpdateViewSet)
 router.register("client", ClientViewSet)
 router.register("categories", CategoryViewSet)
 router.register("sub-category", SubCategoryAddViewSet)

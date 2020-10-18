@@ -1,5 +1,5 @@
 from typing import Any, Sequence
-
+import random
 import factory.fuzzy
 from django.contrib.auth import get_user_model
 from factory import (django, Faker,
@@ -77,7 +77,8 @@ class TalentFactory(django.DjangoModelFactory):
     description = Faker(
         'paragraph', nb_sentences=8, variable_nb_sentences=True
     )
-    profile_image = 'https://picsum.photos/400/400'
+    profile_image = 'https://picsum.photos/id/{id_image}/400/400'.format(id_image=random.randint(1, 1000))
+    price = float(random.randint(1, 500))
 
     @post_generation
     def post(self, create, extracted, **kwargs):

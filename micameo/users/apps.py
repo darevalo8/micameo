@@ -7,6 +7,7 @@ class UsersConfig(AppConfig):
     verbose_name = _("Users")
 
     def ready(self):
+
         try:
             import micameo.users.signals  # noqa F401
         except ImportError:

@@ -8,6 +8,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
     TokenVerifyView,
 )
+from micameo.users.api.views import TalentUpdateApi
 
 urlpatterns = [
                   path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
@@ -32,7 +33,8 @@ urlpatterns += [
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path("api/auth/users/", include("micameo.users.urls", namespace="users_api")),
     #     ORDER URL
-    path("api/orders/", include("micameo.order.urls", namespace="order_api"))
+    path("api/orders/", include("micameo.order.urls", namespace="order_api")),
+    path("api/talent/<str:username>/", view=TalentUpdateApi.as_view()),
 
 ]
 
