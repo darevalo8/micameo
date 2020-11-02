@@ -1,10 +1,11 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+
 from micameo.users.models import User, Talent, Client
 
 
 @receiver(post_save, sender=User)
-def my_handler(sender, instance, created, **kwargs):
+def change_slug_for_talent_client(sender, instance, created, **kwargs):
     try:
         talent = Talent.objects.get(user=instance)
     except Talent.DoesNotExist:
@@ -17,6 +18,8 @@ def my_handler(sender, instance, created, **kwargs):
         talent.slug = instance.username
         talent.clean()
         talent.save()
+
+
     elif client:
         client.slug = instance.username
         client.clean()

@@ -79,6 +79,8 @@ LOCAL_APPS = [
     "micameo.users.apps.UsersConfig",
     "micameo.enroll.apps.EnrollConfig",
     "micameo.order.apps.OrderConfig",
+    "micameo.balance.apps.BalanceConfig",
+    "micameo.favorites.apps.FavoritesConfig"
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -321,7 +323,9 @@ CORS_ORIGIN_WHITELIST = [
     "https://localhost",
     "http://localhost:4200",
     "http://localhost:4400",
-    'https://mi-cameo.firebaseapp.com'
+    'https://mi-cameo.firebaseapp.com',
+    "https://micameo-talent.firebaseapp.com",
+    "https://micameo-talent.web.app"
 ]
 # JWT
 SIMPLE_JWT = {

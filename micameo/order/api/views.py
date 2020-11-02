@@ -29,6 +29,7 @@ class CreateOrderApi(ApiErrorsMixin, APIView):
         occasion = serializers.CharField()
         instructions = serializers.CharField()
         order_state = serializers.IntegerField()
+        order_price = serializers.DecimalField(max_digits=19, decimal_places=2)
 
     def post(self, request):
         serializer = self.InputSerializer(data=request.data)

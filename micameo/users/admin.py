@@ -7,7 +7,7 @@ from micameo.users.models import Talent, Client, Category, SubCategory
 
 User = get_user_model()
 
-admin.site.register(Talent)
+
 admin.site.register(Client)
 admin.site.register(Category)
 admin.site.register(SubCategory)
@@ -20,3 +20,9 @@ class UserAdmin(auth_admin.UserAdmin):
     # fieldsets = (("User", {"fields": ("first_name",)}),) + auth_admin.UserAdmin.fieldsets
     list_display = ["username", "first_name", "is_superuser"]
     search_fields = ["email"]
+
+
+@admin.register(Talent)
+class TalentAdmin(admin.ModelAdmin):
+    list_display = ["user", "phone_number", "birthday", "description", "price"]
+    search_fields = ["slug", "user"]

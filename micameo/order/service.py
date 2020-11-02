@@ -13,7 +13,8 @@ def create_order(**kwargs) -> Order:
         occasion=get_occasion(kwargs['occasion']),
         phone_number=kwargs['phone_number'],
         instructions=kwargs['instructions'],
-        order_state=kwargs['order_state']
+        order_state=kwargs['order_state'],
+        order_price=kwargs['order_price']
 
     )
     order.full_clean()
