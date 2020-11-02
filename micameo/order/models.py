@@ -46,6 +46,7 @@ class Order(TimeStampedModel):
     instructions = models.TextField(max_length=300)
     pay_method = models.IntegerField(choices=PAY_CHOICES, default=1)
     talent_response = models.IntegerField(choices=TALENT_CHOICE, default=1)
+    order_price = models.DecimalField(max_digits=19, decimal_places=2, default=10.0)
 
     def __str__(self):
         return self.email_client

@@ -35,6 +35,10 @@ urlpatterns += [
     #     ORDER URL
     path("api/orders/", include("micameo.order.urls", namespace="order_api")),
     path("api/talent/<str:username>/", view=TalentUpdateApi.as_view()),
+    #    BALANCE URL
+    path("api/balance/", include("micameo.balance.urls")),
+    #    FAVORITE URL
+    path("api/favorite/", include("micameo.favorites.urls")),
 
 ]
 

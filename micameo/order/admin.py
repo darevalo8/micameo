@@ -11,7 +11,7 @@ class Occasion(admin.ModelAdmin):
 
 @admin.register(Order)
 class Order(admin.ModelAdmin):
-    list_display = ["email_client", "order_state", "talent", "talent_response", "created"]
+    list_display = ["email_client", "order_state", "talent", "talent_response", "order_price", "created"]
     search_fields = ["email_client"]
 
 
