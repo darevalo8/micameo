@@ -1,6 +1,6 @@
 from django.contrib import admin
 from micameo.balance.models import (BalanceOrder, BalanceTalent, BalanceMiCameo,
-                                    BalanceTalentDetail, BalanceOrderDetail)
+                                    BalanceTalentDetail, BalanceOrderDetail, RePay, Withdraw)
 
 
 @admin.register(BalanceOrder)
@@ -29,3 +29,15 @@ class BalanceOrderDetailAdmin(admin.ModelAdmin):
 class BalanceTalentDetailAdmin(admin.ModelAdmin):
     list_display = ["balance", "order"]
     search_fields = ["balance"]
+
+
+@admin.register(RePay)
+class RePayAdmin(admin.ModelAdmin):
+    list_display = ["order", "state_repay"]
+    search_fields = ["order", ]
+
+
+@admin.register(Withdraw)
+class WithdrawAdmin(admin.ModelAdmin):
+    list_display = ["balance_talent", "amount", "state_withdraw"]
+    search_fields = ["balance_talent", ]

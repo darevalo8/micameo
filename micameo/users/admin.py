@@ -25,4 +25,4 @@ class UserAdmin(auth_admin.UserAdmin):
 @admin.register(Talent)
 class TalentAdmin(admin.ModelAdmin):
     list_display = ["user", "phone_number", "birthday", "description", "price"]
-    search_fields = ["slug", "user"]
+    search_fields = ["slug", "user__username"]

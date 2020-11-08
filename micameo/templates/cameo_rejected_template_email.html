@@ -1,0 +1,12 @@
+
+{% autoescape off %}
+{% if order.from_client %}
+  Hola {{ order.from_client }}
+{% else %}
+  Hola {{ order.to }}
+{% endif %}
+  Gracias por elegir a Micameo como tu plataforma para estar más cerca a las personas que admiras.
+  Él talento {{ order.talent }} ha rechazado tu cameo, nos pondremos en contacto contigo para realizar el
+  el rembolso del dinero, pedimos disculpas.
+  MiCameo.
+{% endautoescape %}

@@ -1,0 +1,13 @@
+
+{% autoescape off %}
+  {% if order %}
+    Hola admins el talento {{ order.talent }} a rechazado un cameo a {{ order.email_client }}
+    para hacerle seguimiento y hacer un rembolso, ya esta registro de la tabla repay(reembolsos).
+    MiCameo.
+  {% else %}
+    Hola admins el talento {{ withdraw.balance_talent.talent }} ha solicitado un retiro de dinero por un monto de:
+    <b>{{ withdraw.amount }}</b> ya se registro en la tabla withdraw(retiros), para que hagan la gestión correspondiente
+    MiCameo.
+  {% endif %}
+
+{% endautoescape %}

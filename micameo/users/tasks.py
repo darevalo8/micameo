@@ -19,3 +19,11 @@ def send_email(message, to_email):
     email.send()
 
     return None
+
+
+@celery_app.task()
+def send_email_notification(subject, message, to_email):
+    email = EmailMessage(subject, message, to=to_email)
+    email.send()
+
+    return None

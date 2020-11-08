@@ -1,5 +1,5 @@
 from micameo.balance.models import (BalanceTalent, BalanceOrderDetail,
-                                    BalanceOrder, BalanceTalentDetail, BalanceMiCameo)
+                                    BalanceOrder, BalanceTalentDetail, BalanceMiCameo, Withdraw)
 from micameo.users.models import Talent
 
 
@@ -35,3 +35,8 @@ def get_balance_order() -> BalanceOrder:
 def get_balance_micameo() -> BalanceMiCameo:
     balance = BalanceMiCameo.objects.get(balance_name="Micameo")
     return balance
+
+
+def get_withdraws(balance_talent: BalanceTalent) -> Withdraw:
+    witdraw = Withdraw.objects.filter(balance_talent=balance_talent)
+    return witdraw

@@ -1,0 +1,16 @@
+
+{% autoescape off %}
+{% if cameo.order.from_client %}
+  Hola {{ cameo.order.from_client }}
+{% else %}
+  Hola {{ cameo.to }}
+{% endif %}
+  Gracias por elegir a Micameo como tu plataforma para estar más cerca a las personas que admiras.
+  Él talento {{ cameo.order.talent }} ha realizado tu cameo, en el siguiente enlace lo podras descargar.
+  Felicidades!!!! no olvides de compartir en tus redes sociales y usar el #Micameo para repostear tu video en nuestras
+  redes sociales :).
+
+  url del video: {{ cameo.url_video }}
+
+  MiCameo.
+{% endautoescape %}

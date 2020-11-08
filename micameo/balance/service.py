@@ -1,8 +1,14 @@
-from micameo.balance.models import (BalanceTalent, BalanceOrderDetail, BalanceTalentDetail)
-from micameo.balance.selectors import (get_balance_order, get_balance_talent, get_balance_micameo)
-from micameo.users.models import Talent
-from micameo.order.models import Order
 import decimal
+
+from django.template.loader import render_to_string
+
+from micameo.balance.models import (BalanceTalent, BalanceOrderDetail, BalanceTalentDetail, RePay, Withdraw)
+from micameo.balance.selectors import (get_balance_order, get_balance_talent, get_balance_micameo)
+from micameo.order.models import Order
+from micameo.users.models import Talent
+from django.core.exceptions import ValidationError
+
+from micameo.users.tasks import send_email_notification
 
 
 def create_balance_talent(talent: Talent) -> BalanceTalent:
@@ -33,6 +39,13 @@ def add_amount_to_balance_order(order: Order):
     balance.save()
 
 
+def add_repay(order: Order) -> RePay:
+    repay = RePay(order=order)
+    repay.full_clean()
+    repay.save()
+    return repay
+
+
 def add_amount_to_talent_and_micameo(order: Order):
     balance_order = get_balance_order()
     balance_talent = get_balance_talent(order.talent)
@@ -46,3 +59,23 @@ def add_amount_to_talent_and_micameo(order: Order):
     balance_order.save()
     balance_talent.save()
     balance_micameo.save()
+
+
+def add_withdraw(balance_talent: BalanceTalent, amount: str) -> Withdraw:
+    amount_decimal = decimal.Decimal(amount)
+    if amount_decimal == 0:
+        raise ValidationError("El valor ingresado no es valido es 0")
+
+    elif amount_decimal <= balance_talent.amount:
+        withdraw = Withdraw(balance_talent=balance_talent, amount=amount_decimal)
+        withdraw.full_clean()
+        withdraw.save()
+        message = render_to_string('notify_admins_template.html', {
+            "withdraw": withdraw,
+        })
+        to_email = ['danielfelipe.arevalo2@gmail.com', "sergio6006@hotmail.com", "andresgiraldo99@hotmail.com"]
+        send_email_notification("Retiro Talento {0}".format(withdraw.balance_talent.talent), message=message, to_email=to_email)
+    else:
+        raise ValidationError("El valor ingresado es mayor al valor que tiene en su cuenta")
+
+    return withdraw

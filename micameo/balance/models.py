@@ -42,3 +42,31 @@ class BalanceTalentDetail(TimeStampedModel):
 
     def __str__(self):
         return str(self.balance)
+
+
+class RePay(TimeStampedModel):
+    TRANSACTION_CHOICES = (
+        (1, 'PENDIENTE'),
+        (2, 'PAGADA'),
+
+    )
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    state_repay = models.IntegerField(choices=TRANSACTION_CHOICES, default=1)
+
+    def __str__(self):
+        return str(self.order)
+
+
+class Withdraw(TimeStampedModel):
+    TRANSACTION_CHOICES = (
+        (1, 'PENDIENTE'),
+        (2, 'PAGADA'),
+        (3, 'RECHAZADA'),
+
+    )
+    balance_talent = models.ForeignKey(BalanceTalent, on_delete=models.CASCADE)
+    amount = models.DecimalField(max_digits=19, decimal_places=2, default=0)
+    state_withdraw = models.IntegerField(choices=TRANSACTION_CHOICES, default=1)
+
+    def __str__(self):
+        return str(self.balance_talent)
