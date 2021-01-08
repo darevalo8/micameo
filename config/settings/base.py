@@ -325,7 +325,11 @@ CORS_ORIGIN_WHITELIST = [
     "http://localhost:4400",
     'https://mi-cameo.firebaseapp.com',
     "https://micameo-talent.firebaseapp.com",
-    "https://micameo-talent.web.app"
+    "https://micameo-talent.web.app",
+    "https://micameo.co",
+    "https://www.micameo.co",
+    "https://talent.micameo.co"
+
 ]
 # JWT
 SIMPLE_JWT = {
